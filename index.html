@@ -10,85 +10,114 @@
 <title>Salary Manager</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
-*{box-sizing:border-box}body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f0fdf4;color:#0f172a}
-.card{background:#fff;border:1px solid #dbe4e8;border-radius:20px;box-shadow:0 6px 24px #0f172a0b}
-input,button{font:inherit}.day{min-height:68px;border:1px solid #cbd5e1;border-radius:14px;padding:7px;text-align:left}
-.work{background:#f8fafc}.absent{background:#fef2f2;border-color:#fca5a5;color:#991b1b}.ot{background:#ecfdf5;border-color:#6ee7b7;color:#065f46}
-@media(min-width:1024px){.stickybox{position:sticky;top:16px}}
-@media print{.no-print{display:none!important}body{background:#fff}.card{box-shadow:none}}
+*{box-sizing:border-box}
+body{font-family:system-ui,-apple-system,Segoe UI,sans-serif;background:#f0fdf4;color:#0f172a;min-height:100vh}
+.card{background:#fff;border:1px solid #e2e8f0;border-radius:16px;box-shadow:0 4px 20px rgba(15,23,42,0.06)}
+input,button{font:inherit}
+.day{min-height:72px;border:1.5px solid #e2e8f0;border-radius:12px;padding:8px;text-align:left;transition:all .15s ease;cursor:pointer}
+.day:hover{transform:translateY(-1px);box-shadow:0 4px 12px rgba(0,0,0,.08)}
+.work{background:#f8fafc}
+.absent{background:#fef2f2;border-color:#fca5a5;color:#991b1b}
+.ot{background:#ecfdf5;border-color:#6ee7b7;color:#065f46}
+@media(min-width:1024px){.stickybox{position:sticky;top:20px}}
+@media print{.no-print{display:none!important}body{background:#fff}.card{box-shadow:none;border:none}}
+.label{font-size:13px;font-weight:600;color:#475569;margin-bottom:4px;display:block}
+.input{width:100%;border:1.5px solid #e2e8f0;border-radius:12px;padding:12px 14px;font-size:15px;background:#fff;transition:border .15s}
+.input:focus{outline:none;border-color:#10b981;box-shadow:0 0 0 3px rgba(16,185,129,.15)}
 </style>
 </head>
 <body>
-<header class="bg-slate-950 text-white sticky top-0 z-20">
-<div class="max-w-6xl mx-auto px-4 py-4 flex items-center justify-between">
-<div><b class="text-lg">💰 Personal Salary Manager</b><div class="text-xs text-slate-400">Offline salary calculator</div></div>
-<button id="installBtn" class="hidden bg-emerald-500 px-3 py-2 rounded-xl text-sm font-bold no-print">Install App</button>
-</div></header>
+<header class="bg-slate-950 text-white sticky top-0 z-20 shadow-lg">
+<div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
+<div>
+<div class="font-bold text-lg tracking-tight">💰 Personal Salary Manager</div>
+<div class="text-xs text-slate-400 mt-0.5">Offline • Auto-saves everything</div>
+</div>
+<button id="installBtn" class="hidden bg-emerald-500 hover:bg-emerald-400 px-4 py-2 rounded-xl text-sm font-bold no-print transition">Install App</button>
+</div>
+</header>
 
 <main class="max-w-6xl mx-auto p-4 space-y-5">
 <div class="grid grid-cols-2 md:grid-cols-4 gap-3 no-print">
-<div class="card p-4"><small>Days</small><div id="days" class="text-2xl font-black">30</div></div>
-<div class="card p-4"><small>Sundays</small><div id="sundays" class="text-2xl font-black text-emerald-600">4</div></div>
-<div class="card p-4"><small>Absent</small><div id="absent" class="text-2xl font-black text-red-600">0</div></div>
-<div class="card p-4"><small>Sunday OT</small><div id="otdays" class="text-2xl font-black text-emerald-600">4</div></div>
+<div class="card p-4"><div class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Days</div><div id="days" class="text-2xl font-black mt-1">30</div></div>
+<div class="card p-4"><div class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Sundays</div><div id="sundays" class="text-2xl font-black text-emerald-600 mt-1">4</div></div>
+<div class="card p-4"><div class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Absent</div><div id="absent" class="text-2xl font-black text-red-600 mt-1">0</div></div>
+<div class="card p-4"><div class="text-xs font-semibold text-slate-500 uppercase tracking-wide">Sunday OT</div><div id="otdays" class="text-2xl font-black text-emerald-600 mt-1">4</div></div>
 </div>
 
 <div class="grid lg:grid-cols-2 gap-5">
 <section class="space-y-5 no-print">
 <div class="card p-5">
-<h2 class="font-bold text-lg mb-3">Month & Presets</h2>
-<input id="month" type="month" value="2026-09" class="w-full border rounded-xl px-3 py-3 mb-3">
+<h2 class="font-bold text-base mb-3 text-slate-800">Month & Presets</h2>
+<input id="month" type="month" value="2026-09" class="input mb-3">
 <div class="grid grid-cols-3 gap-2">
-<button class="preset bg-slate-900 text-white rounded-xl p-3 text-sm" data-m="2026-09">Sep 2026</button>
-<button class="preset bg-slate-900 text-white rounded-xl p-3 text-sm" data-m="2026-10">Oct 2026</button>
-<button class="preset bg-slate-900 text-white rounded-xl p-3 text-sm" data-m="2026-11">Nov 2026</button>
+<button class="preset bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-2.5 text-sm font-semibold transition" data-m="2026-09">Sep 2026</button>
+<button class="preset bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-2.5 text-sm font-semibold transition" data-m="2026-10">Oct 2026</button>
+<button class="preset bg-slate-900 hover:bg-slate-800 text-white rounded-xl py-2.5 text-sm font-semibold transition" data-m="2026-11">Nov 2026</button>
 </div>
 </div>
 
 <div class="card p-5">
-<h2 class="font-bold text-lg mb-4">Salary Parameters</h2>
+<h2 class="font-bold text-base mb-4 text-slate-800">Salary Parameters</h2>
 <div class="grid sm:grid-cols-2 gap-3">
-<label class="text-sm">Daily Rate<input id="rate" type="number" value="900" class="w-full border rounded-xl p-3 mt-1"></label>
-<label class="text-sm">Bonus<input id="bonus" type="number" value="10000" class="w-full border rounded-xl p-3 mt-1"></label>
-<label class="text-sm">Sunday OT Rate<input id="otr" type="number" value="1350" class="w-full border rounded-xl p-3 mt-1"></label>
-<label class="text-sm">Family Support<input id="family" type="number" value="12000" class="w-full border rounded-xl p-3 mt-1"></label>
-<label class="text-sm">Hotel<input id="hotel" type="number" value="9000" class="w-full border rounded-xl p-3 mt-1"></label>
-<label class="text-sm">Internet<input id="internet" type="number" value="2000" class="w-full border rounded-xl p-3 mt-1"></label>
-<label class="text-sm">Other Fixed<input id="other" type="number" value="1000" class="w-full border rounded-xl p-3 mt-1"></label>
+<div><label class="label">Daily Rate (PKR)</label><input id="rate" type="number" value="900" class="input"></div>
+<div><label class="label">Bonus (PKR)</label><input id="bonus" type="number" value="10000" class="input"></div>
+<div><label class="label">Sunday OT Rate (PKR)</label><input id="otr" type="number" value="1350" class="input"></div>
+<div><label class="label">Family Support (PKR)</label><input id="family" type="number" value="12000" class="input"></div>
+<div><label class="label">Hotel (PKR)</label><input id="hotel" type="number" value="9000" class="input"></div>
+<div><label class="label">Internet (PKR)</label><input id="internet" type="number" value="2000" class="input"></div>
+<div><label class="label">Other Fixed (PKR)</label><input id="other" type="number" value="1000" class="input"></div>
+<div><label class="label">Advance (PKR)</label><input id="advance" type="number" value="0" class="input"></div>
 </div>
 </div>
 
 <div class="card p-5">
-<div class="flex justify-between items-center mb-4"><h2 class="font-bold text-lg">Attendance</h2><span class="text-xs text-slate-500">Tap a day to change status</span></div>
-<div class="grid grid-cols-7 gap-1 mb-2 text-center text-xs font-bold text-slate-400"><span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span></div>
-<div id="calendar" class="grid grid-cols-7 gap-1"></div>
-<div class="text-xs text-slate-500 mt-4">Non-Sunday: Work ↔ Absent. Sunday: Work → Absent → OT → Work.</div>
+<div class="flex justify-between items-center mb-4">
+<h2 class="font-bold text-base text-slate-800">Attendance</h2>
+<span class="text-xs text-slate-500 bg-slate-100 px-2 py-1 rounded-lg">Tap day to change</span>
+</div>
+<div class="grid grid-cols-7 gap-1.5 mb-2 text-center text-xs font-bold text-slate-400">
+<span>Sun</span><span>Mon</span><span>Tue</span><span>Wed</span><span>Thu</span><span>Fri</span><span>Sat</span>
+</div>
+<div id="calendar" class="grid grid-cols-7 gap-1.5"></div>
+<div class="text-xs text-slate-500 mt-4 leading-relaxed">Non-Sunday: Work ↔ Absent &nbsp;•&nbsp; Sunday: Work → Absent → OT → Work</div>
 </div>
 </section>
 
 <section class="stickybox">
-<div id="slip" class="bg-slate-950 text-white rounded-3xl p-6 shadow-xl">
-<div class="border-b border-white/10 pb-5"><div class="text-emerald-300 text-xs font-bold uppercase tracking-widest">Official Salary Slip</div><h2 id="slipMonth" class="text-2xl font-black mt-1">September 2026</h2></div>
-<div class="py-5 border-b border-white/10 space-y-3">
-<h3 class="text-xs font-bold uppercase text-slate-400">Earnings</h3>
-<div class="flex justify-between"><span>Base Earnings</span><b id="base"></b></div>
-<div class="flex justify-between"><span>Sunday OT</span><b id="sot"></b></div>
-<div class="flex justify-between"><span>Bonus</span><b id="bon"></b></div>
-<div class="border-t border-white/10 pt-3 flex justify-between"><b>Gross Income</b><b id="gross"></b></div>
+<div id="slip" class="bg-slate-950 text-white rounded-2xl p-6 shadow-2xl">
+<div class="border-b border-white/10 pb-4">
+<div class="text-emerald-400 text-xs font-bold uppercase tracking-widest">Official Salary Slip</div>
+<h2 id="slipMonth" class="text-2xl font-black mt-1">September 2026</h2>
 </div>
-<div class="py-5 border-b border-white/10 space-y-3">
-<h3 class="text-xs font-bold uppercase text-slate-400">Deductions</h3>
-<div class="flex justify-between"><span>Family Support</span><b id="fam"></b></div>
-<div class="flex justify-between"><span>Hotel</span><b id="hot"></b></div>
-<div class="flex justify-between"><span>Internet</span><b id="neti"></b></div>
-<div class="flex justify-between"><span>Other Fixed</span><b id="oth"></b></div>
-<div class="flex justify-between"><span>Absence Penalty</span><b id="absp"></b></div>
-<div class="border-t border-white/10 pt-3 flex justify-between"><b>Total Deductions</b><b id="ded" class="text-red-300"></b></div>
+
+<div class="py-4 border-b border-white/10 space-y-2.5">
+<div class="text-xs font-bold uppercase text-slate-400 tracking-wide">Earnings</div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Base Earnings</span><b id="base"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Sunday OT</span><b id="sot"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Bonus</span><b id="bon"></b></div>
+<div class="border-t border-white/10 pt-2.5 flex justify-between font-bold"><span>Gross Income</span><span id="gross"></span></div>
 </div>
-<div class="py-6"><div class="text-xs text-emerald-300 font-bold uppercase">Net In-Hand Salary</div><div id="net" class="text-4xl font-black mt-1"></div></div>
-<div class="grid grid-cols-2 gap-2 no-print">
-<button id="copy" class="bg-white text-slate-950 rounded-xl p-3 font-bold">Copy Breakdown</button>
-<button id="print" class="bg-emerald-500 rounded-xl p-3 font-bold">Print / PDF</button>
+
+<div class="py-4 border-b border-white/10 space-y-2.5">
+<div class="text-xs font-bold uppercase text-slate-400 tracking-wide">Deductions</div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Family Support</span><b id="fam"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Hotel</span><b id="hot"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Internet</span><b id="neti"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Other Fixed</span><b id="oth"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Advance</span><b id="adv"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Absence Penalty</span><b id="absp"></b></div>
+<div class="border-t border-white/10 pt-2.5 flex justify-between font-bold"><span>Total Deductions</span><span id="ded" class="text-red-300"></span></div>
+</div>
+
+<div class="py-5">
+<div class="text-xs text-emerald-400 font-bold uppercase tracking-wide">Net In-Hand Salary</div>
+<div id="net" class="text-4xl font-black mt-1 tracking-tight"></div>
+</div>
+
+<div class="grid grid-cols-2 gap-2.5 no-print">
+<button id="copy" class="bg-white text-slate-950 rounded-xl py-3 font-bold text-sm hover:bg-slate-100 transition">Copy Breakdown</button>
+<button id="print" class="bg-emerald-500 hover:bg-emerald-400 rounded-xl py-3 font-bold text-sm transition">Print / PDF</button>
 </div>
 <p id="msg" class="text-center text-xs text-emerald-300 mt-3 hidden"></p>
 </div>
@@ -107,46 +136,106 @@ function info(){
  return {y,m,days,first,suns};
 }
 function title(){return new Date(info().y,info().m-1,1).toLocaleDateString('en-US',{month:'long',year:'numeric'})}
+
 function init(preset=false){
- const x=info();states={};
+ const x=info();
+ if(Object.keys(states).length!==x.days){
+ states={};
  for(let d=1;d<=x.days;d++) states[d]=new Date(x.y,x.m-1,d).getDay()===0?'ot':'work';
- if(preset){let n=0;for(let d=1;d<=x.days&&n<10;d++){if(new Date(x.y,x.m-1,d).getDay()!==0){states[d]='absent';n++;}}}
+ }
+ if(preset){
+ states={};
+ for(let d=1;d<=x.days;d++) states[d]=new Date(x.y,x.m-1,d).getDay()===0?'ot':'work';
+ let n=0;for(let d=1;d<=x.days&&n<10;d++){if(new Date(x.y,x.m-1,d).getDay()!==0){states[d]='absent';n++;}}
+ }
  render();calc();
 }
+
 function render(){
  const x=info();$('calendar').innerHTML='';
  for(let i=0;i<x.first;i++)$('calendar').append(document.createElement('div'));
  for(let d=1;d<=x.days;d++){
-  let b=document.createElement('button'),s=states[d], sun=new Date(x.y,x.m-1,d).getDay()===0;
+  let b=document.createElement('button'),s=states[d]||'work', sun=new Date(x.y,x.m-1,d).getDay()===0;
   b.className='day '+s;
-  b.innerHTML='<b class="text-lg">'+d+'</b><div class="text-[10px] mt-2">'+(s==='absent'?'❌ Absent':s==='ot'?'⚡ Sunday OT':'💼 Work')+'</div>';
-  b.onclick=()=>{if(sun)states[d]=s==='work'?'absent':s==='absent'?'ot':'work';else states[d]=s==='absent'?'work':'absent';render();calc();save();};
+  b.innerHTML='<b class="text-base">'+d+'</b><div class="text-[10px] mt-1.5 font-medium">'+(s==='absent'?'❌ Absent':s==='ot'?'⚡ Sunday OT':'💼 Work')+'</div>';
+  b.onclick=()=>{
+    if(sun) states[d]=s==='work'?'absent':s==='absent'?'ot':'work';
+    else states[d]=s==='absent'?'work':'absent';
+    render();calc();save();
+  };
   $('calendar').append(b);
  }
 }
+
 function calc(){
- const x=info(), rate=+$('rate').value||0, bonus=+$('bonus').value||0, otr=+$('otr').value||0;
- const family=+$('family').value||0,hotel=+$('hotel').value||0,internet=+$('internet').value||0,other=+$('other').value||0;
- let abs=0,ot=0;for(let d=1;d<=x.days;d++){if(states[d]==='absent')abs++;if(states[d]==='ot')ot++;}
- const base=x.days*rate,sot=ot*otr,gross=base+sot+bonus, fixed=family+hotel+internet+other, absp=abs*rate,ded=fixed+absp,net=gross-ded;
- $('days').textContent=x.days;$('sundays').textContent=x.suns.length;$('absent').textContent=abs;$('otdays').textContent=ot;
- $('slipMonth').textContent=title();$('base').textContent=money(base);$('sot').textContent=money(sot);$('bon').textContent=money(bonus);$('gross').textContent=money(gross);
- $('fam').textContent=money(family);$('hot').textContent=money(hotel);$('neti').textContent=money(internet);$('oth').textContent=money(other);$('absp').textContent=money(absp);$('ded').textContent=money(ded);$('net').textContent=money(net);
+ const x=info();
+ const rate=+$('rate').value||0, bonus=+$('bonus').value||0, otr=+$('otr').value||0;
+ const family=+$('family').value||0, hotel=+$('hotel').value||0, internet=+$('internet').value||0;
+ const other=+$('other').value||0, advance=+$('advance').value||0;
+ let abs=0,ot=0;
+ for(let d=1;d<=x.days;d++){if(states[d]==='absent')abs++;if(states[d]==='ot')ot++;}
+ const base=x.days*rate, sot=ot*otr, gross=base+sot+bonus;
+ const fixed=family+hotel+internet+other+advance, absp=abs*rate, ded=fixed+absp, net=gross-ded;
+
+ $('days').textContent=x.days;
+ $('sundays').textContent=x.suns.length;
+ $('absent').textContent=abs;
+ $('otdays').textContent=ot;
+ $('slipMonth').textContent=title();
+ $('base').textContent=money(base);
+ $('sot').textContent=money(sot);
+ $('bon').textContent=money(bonus);
+ $('gross').textContent=money(gross);
+ $('fam').textContent=money(family);
+ $('hot').textContent=money(hotel);
+ $('neti').textContent=money(internet);
+ $('oth').textContent=money(other);
+ $('adv').textContent=money(advance);
+ $('absp').textContent=money(absp);
+ $('ded').textContent=money(ded);
+ $('net').textContent=money(net);
 }
-function save(){localStorage.salaryManager=JSON.stringify({month,states,vals:[...document.querySelectorAll('input[type=number]')].map(x=>x.value)});}
-function load(){try{let a=JSON.parse(localStorage.salaryManager);if(a){month=a.month||month;states=a.states||{};let ids=['rate','bonus','otr','family','hotel','internet','other'];(a.vals||[]).forEach((v,i)=>{if($(ids[i]))$(ids[i]).value=v});}}catch(e){}$('month').value=month;}
+
+function save(){
+ const vals=['rate','bonus','otr','family','hotel','internet','other','advance'].map(id=>$(id).value);
+ localStorage.setItem('salaryManager', JSON.stringify({month, states, vals}));
+}
+
+function load(){
+ try{
+ const a=JSON.parse(localStorage.getItem('salaryManager'));
+ if(a){
+ month=a.month||month;
+ states=a.states||{};
+ const ids=['rate','bonus','otr','family','hotel','internet','other','advance'];
+ (a.vals||[]).forEach((v,i)=>{if($(ids[i])) $(ids[i]).value=v;});
+ }
+ }catch(e){}
+ $('month').value=month;
+}
+
 function breakdown(){
- return `PERSONAL SALARY BREAKDOWN\n${title()}\n\nEARNINGS\nBase Earnings: ${$('base').textContent}\nSunday OT: ${$('sot').textContent}\nBonus: ${$('bon').textContent}\nGross Income: ${$('gross').textContent}\n\nDEDUCTIONS\nFamily Support: ${$('fam').textContent}\nHotel: ${$('hot').textContent}\nInternet: ${$('neti').textContent}\nOther Fixed: ${$('oth').textContent}\nAbsence Penalty: ${$('absp').textContent}\nTotal Deductions: ${$('ded').textContent}\n\nNET IN-HAND SALARY: ${$('net').textContent}`;}
+ return `PERSONAL SALARY BREAKDOWN\n${title()}\n\nEARNINGS\nBase Earnings: ${$('base').textContent}\nSunday OT: ${$('sot').textContent}\nBonus: ${$('bon').textContent}\nGross Income: ${$('gross').textContent}\n\nDEDUCTIONS\nFamily Support: ${$('fam').textContent}\nHotel: ${$('hot').textContent}\nInternet: ${$('neti').textContent}\nOther Fixed: ${$('oth').textContent}\nAdvance: ${$('adv').textContent}\nAbsence Penalty: ${$('absp').textContent}\nTotal Deductions: ${$('ded').textContent}\n\nNET IN-HAND SALARY: ${$('net').textContent}`;
+}
+
 $('month').onchange=e=>{month=e.target.value;init();save()};
 document.querySelectorAll('input[type=number]').forEach(i=>i.oninput=()=>{calc();save()});
 document.querySelectorAll('.preset').forEach(b=>b.onclick=()=>{month=b.dataset.m;$('month').value=month;init(true);save()});
-$('copy').onclick=async()=>{await navigator.clipboard.writeText(breakdown());$('msg').textContent='Copied successfully';$('msg').classList.remove('hidden');setTimeout(()=>$('msg').classList.add('hidden'),2000)};
+$('copy').onclick=async()=>{
+ await navigator.clipboard.writeText(breakdown());
+ $('msg').textContent='Copied successfully';
+ $('msg').classList.remove('hidden');
+ setTimeout(()=>$('msg').classList.add('hidden'),2000);
+};
 $('print').onclick=()=>window.print();
+
 let deferred;
 window.addEventListener('beforeinstallprompt',e=>{e.preventDefault();deferred=e;$('installBtn').classList.remove('hidden')});
 $('installBtn').onclick=async()=>{if(deferred){deferred.prompt();await deferred.userChoice;deferred=null;$('installBtn').classList.add('hidden')}};
-load();init(Object.keys(states).length===0);
-if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js'));
+
+load();
+init(Object.keys(states).length===0);
+if('serviceWorker' in navigator) window.addEventListener('load',()=>navigator.serviceWorker.register('service-worker.js'));
 </script>
 </body>
 </html>
