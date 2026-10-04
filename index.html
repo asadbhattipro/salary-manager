@@ -4,10 +4,10 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <meta name="theme-color" content="#059669">
-<meta name="description" content="Personal Salary Manager and Calculator">
+<meta name="description" content="Asad Salary Manager and Calculator">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
-<title>Salary Manager</title>
+<title>Asad Salary Manager</title>
 <script src="https://cdn.tailwindcss.com"></script>
 <style>
 *{box-sizing:border-box}
@@ -30,7 +30,7 @@ input,button{font:inherit}
 <header class="bg-slate-950 text-white sticky top-0 z-20 shadow-lg">
 <div class="max-w-6xl mx-auto px-4 py-3.5 flex items-center justify-between">
 <div>
-<div class="font-bold text-lg tracking-tight">💰 Personal Salary Manager</div>
+<div class="font-bold text-lg tracking-tight">💰 Asad Salary Manager</div>
 <div class="text-xs text-slate-400 mt-0.5">Offline • Auto-saves everything</div>
 </div>
 <button id="installBtn" class="hidden bg-emerald-500 hover:bg-emerald-400 px-4 py-2 rounded-xl text-sm font-bold no-print transition">Install App</button>
@@ -215,7 +215,7 @@ function load(){
 }
 
 function breakdown(){
- return `PERSONAL SALARY BREAKDOWN\n${title()}\n\nEARNINGS\nBase Earnings: ${$('base').textContent}\nSunday OT: ${$('sot').textContent}\nBonus: ${$('bon').textContent}\nGross Income: ${$('gross').textContent}\n\nDEDUCTIONS\nFamily Support: ${$('fam').textContent}\nHotel: ${$('hot').textContent}\nInternet: ${$('neti').textContent}\nOther Fixed: ${$('oth').textContent}\nAdvance: ${$('adv').textContent}\nAbsence Penalty: ${$('absp').textContent}\nTotal Deductions: ${$('ded').textContent}\n\nNET IN-HAND SALARY: ${$('net').textContent}`;
+ return `ASAD SALARY BREAKDOWN\n${title()}\n\nEARNINGS\nBase Earnings: ${$('base').textContent}\nSunday OT: ${$('sot').textContent}\nBonus: ${$('bon').textContent}\nGross Income: ${$('gross').textContent}\n\nDEDUCTIONS\nFamily Support: ${$('fam').textContent}\nHotel: ${$('hot').textContent}\nInternet: ${$('neti').textContent}\nOther Fixed: ${$('oth').textContent}\nAdvance: ${$('adv').textContent}\nAbsence Penalty: ${$('absp').textContent}\nTotal Deductions: ${$('ded').textContent}\n\nNET IN-HAND SALARY: ${$('net').textContent}`;
 }
 
 $('month').onchange=e=>{month=e.target.value;init();save()};
