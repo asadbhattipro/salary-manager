@@ -60,14 +60,14 @@ input,button{font:inherit}
 <div class="card p-5">
 <h2 class="font-bold text-base mb-4 text-slate-800">Salary Parameters</h2>
 <div class="grid sm:grid-cols-2 gap-3">
-<div><label class="label">Daily Rate (PKR)</label><input id="rate" type="number" value="900" class="input"></div>
-<div><label class="label">Bonus (PKR)</label><input id="bonus" type="number" value="10000" class="input"></div>
-<div><label class="label">Sunday OT Rate (PKR)</label><input id="otr" type="number" value="1350" class="input"></div>
-<div><label class="label">Family Support (PKR)</label><input id="family" type="number" value="12000" class="input"></div>
-<div><label class="label">Hotel (PKR)</label><input id="hotel" type="number" value="9000" class="input"></div>
-<div><label class="label">Internet (PKR)</label><input id="internet" type="number" value="2000" class="input"></div>
-<div><label class="label">Other Fixed (PKR)</label><input id="other" type="number" value="1000" class="input"></div>
-<div><label class="label">Advance (PKR)</label><input id="advance" type="number" value="0" class="input"></div>
+<div><label class="label">Days</label><input id="rate" type="number" value="900" class="input"></div>
+<div><label class="label">Bonus</label><input id="bonus" type="number" value="10000" class="input"></div>
+<div><label class="label">Sunday OT Rate</label><input id="otr" type="number" value="1350" class="input"></div>
+<div><label class="label">Family Support</label><input id="family" type="number" value="12000" class="input"></div>
+<div><label class="label">Hotel</label><input id="hotel" type="number" value="9000" class="input"></div>
+<div><label class="label">Internet</label><input id="internet" type="number" value="2000" class="input"></div>
+<div><label class="label">Advance</label><input id="advance" type="number" value="0" class="input"></div>
+<div><label class="label">Other</label><input id="other" type="number" value="1000" class="input"></div>
 </div>
 </div>
 
@@ -104,8 +104,8 @@ input,button{font:inherit}
 <div class="flex justify-between text-sm"><span class="text-slate-300">Family Support</span><b id="fam"></b></div>
 <div class="flex justify-between text-sm"><span class="text-slate-300">Hotel</span><b id="hot"></b></div>
 <div class="flex justify-between text-sm"><span class="text-slate-300">Internet</span><b id="neti"></b></div>
-<div class="flex justify-between text-sm"><span class="text-slate-300">Other Fixed</span><b id="oth"></b></div>
 <div class="flex justify-between text-sm"><span class="text-slate-300">Advance</span><b id="adv"></b></div>
+<div class="flex justify-between text-sm"><span class="text-slate-300">Other</span><b id="oth"></b></div>
 <div class="flex justify-between text-sm"><span class="text-slate-300">Absence Penalty</span><b id="absp"></b></div>
 <div class="border-t border-white/10 pt-2.5 flex justify-between font-bold"><span>Total Deductions</span><span id="ded" class="text-red-300"></span></div>
 </div>
@@ -197,7 +197,7 @@ function calc(){
 }
 
 function save(){
- const vals=['rate','bonus','otr','family','hotel','internet','other','advance'].map(id=>$(id).value);
+ const vals=['rate','bonus','otr','family','hotel','internet','advance','other'].map(id=>$(id).value);
  localStorage.setItem('salaryManager', JSON.stringify({month, states, vals}));
 }
 
@@ -207,7 +207,7 @@ function load(){
  if(a){
  month=a.month||month;
  states=a.states||{};
- const ids=['rate','bonus','otr','family','hotel','internet','other','advance'];
+ const ids=['rate','bonus','otr','family','hotel','internet','advance','other'];
  (a.vals||[]).forEach((v,i)=>{if($(ids[i])) $(ids[i]).value=v;});
  }
  }catch(e){}
@@ -215,7 +215,7 @@ function load(){
 }
 
 function breakdown(){
- return `ASAD SALARY BREAKDOWN\n${title()}\n\nEARNINGS\nBase Earnings: ${$('base').textContent}\nSunday OT: ${$('sot').textContent}\nBonus: ${$('bon').textContent}\nGross Income: ${$('gross').textContent}\n\nDEDUCTIONS\nFamily Support: ${$('fam').textContent}\nHotel: ${$('hot').textContent}\nInternet: ${$('neti').textContent}\nOther Fixed: ${$('oth').textContent}\nAdvance: ${$('adv').textContent}\nAbsence Penalty: ${$('absp').textContent}\nTotal Deductions: ${$('ded').textContent}\n\nNET IN-HAND SALARY: ${$('net').textContent}`;
+ return `ASAD SALARY BREAKDOWN\n${title()}\n\nEARNINGS\nBase Earnings: ${$('base').textContent}\nSunday OT: ${$('sot').textContent}\nBonus: ${$('bon').textContent}\nGross Income: ${$('gross').textContent}\n\nDEDUCTIONS\nFamily Support: ${$('fam').textContent}\nHotel: ${$('hot').textContent}\nInternet: ${$('neti').textContent}\nAdvance: ${$('adv').textContent}\nOther: ${$('oth').textContent}\nAbsence Penalty: ${$('absp').textContent}\nTotal Deductions: ${$('ded').textContent}\n\nNET IN-HAND SALARY: ${$('net').textContent}`;
 }
 
 $('month').onchange=e=>{month=e.target.value;init();save()};
